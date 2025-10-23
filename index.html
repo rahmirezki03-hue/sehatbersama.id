@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SehatBersama.id - Konsultasi Tingkat Stres Gratis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .counselor-section {
+            background: #f8f9ff;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .counselor-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .counselor-info h2 {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .counselor-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .question {
+            background: #f8f9ff;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .question p {
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .option label {
+            cursor: pointer;
+            color: #555;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, 
+        input[type="email"]:focus, 
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .result {
+            display: none;
+            background: #f8f9ff;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 3px solid #667eea;
+        }
+
+        .result h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .stress-level {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .level-rendah {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .level-sedang {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .level-tinggi {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .recommendation {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .recommendation h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .recommendation ul {
+            margin-left: 20px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .counselor-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌿 SehatBersama.id</h1>
+            <p>Konsultasi Tingkat Stres Gratis & Terpercaya</p>
+        </header>
+
+        <div class="counselor-section">
+            <div class="counselor-avatar">👩‍⚕️</div>
+            <div class="counselor-info">
+                <h2>Mardiana, M.Psi., Psikolog</h2>
+                <p>Konselor profesional dengan pengalaman 8+ tahun dalam bidang kesehatan mental dan manajemen stres. Siap membantu Anda mengelola stres dengan lebih baik.</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h3>📋 Data Diri</h3>
+                <input type="text" id="nama" placeholder="Nama Lengkap" required>
+                <input type="email" id="email" placeholder="Email (opsional)">
+            </div>
+
+            <div class="section">
+                <h3>🧠 Kuesioner Tingkat Stres</h3>
+                <p style="color: #666; margin-bottom: 20px;">Jawab pertanyaan berikut sesuai dengan kondisi Anda dalam 2 minggu terakhir:</p>
+
+                <div class="question">
+                    <p>1. Seberapa sering Anda merasa kesulitan tidur atau tidur tidak nyenyak?</p>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q1" value="0" id="q1-1">
+                            <label for="q1-1">Tidak pernah</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q1" value="1" id="q1-2">
+                            <label for="q1-2">Jarang</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q1" value="2" id="q1-3">
+                            <label for="q1-3">Kadang-kadang</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q1" value="3" id="q1-4">
+                            <label for="q1-4">Sering</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q1" value="4" id="q1-5">
+                            <label for="q1-5">Sangat sering</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>2. Seberapa sering Anda merasa cemas atau khawatir berlebihan?</p>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q2" value="0" id="q2-1">
+                            <label for="q2-1">Tidak pernah</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q2" value="1" id="q2-2">
+                            <label for="q2-2">Jarang</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q2" value="2" id="q2-3">
+                            <label for="q2-3">Kadang-kadang</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q2" value="3" id="q2-4">
+                            <label for="q2-4">Sering</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q2" value="4" id="q2-5">
+                            <label for="q2-5">Sangat sering</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>3. Seberapa sering Anda merasa mudah marah atau tersinggung?</p>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q3" value="0" id="q3-1">
+                            <label for="q3-1">Tidak pernah</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q3" value="1" id="q3-2">
+                            <label for="q3-2">Jarang</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q3" value="2" id="q3-3">
+                            <label for="q3-3">Kadang-kadang</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q3" value="3" id="q3-4">
+                            <label for="q3-4">Sering</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q3" value="4" id="q3-5">
+                            <label for="q3-5">Sangat sering</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>4. Seberapa sering Anda merasa sulit berkonsentrasi?</p>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q4" value="0" id="q4-1">
+                            <label for="q4-1">Tidak pernah</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q4" value="1" id="q4-2">
+                            <label for="q4-2">Jarang</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q4" value="2" id="q4-3">
+                            <label for="q4-3">Kadang-kadang</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q4" value="3" id="q4-4">
+                            <label for="q4-4">Sering</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q4" value="4" id="q4-5">
+                            <label for="q4-5">Sangat sering</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>5. Seberapa sering Anda merasa lelah atau kelelahan tanpa sebab jelas?</p>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q5" value="0" id="q5-1">
+                            <label for="q5-1">Tidak pernah</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q5" value="1" id="q5-2">
+                            <label for="q5-2">Jarang</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q5" value="2" id="q5-3">
+                            <label for="q5-3">Kadang-kadang</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q5" value="3" id="q5-4">
+                            <label for="q5-4">Sering</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q5" value="4" id="q5-5">
+                            <label for="q5-5">Sangat sering</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>6. Seberapa sering Anda merasa kewalahan dengan tanggung jawab?</p>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q6" value="0" id="q6-1">
+                            <label for="q6-1">Tidak pernah</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q6" value="1" id="q6-2">
+                            <label for="q6-2">Jarang</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q6" value="2" id="q6-3">
+                            <label for="q6-3">Kadang-kadang</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q6" value="3" id="q6-4">
+                            <label for="q6-4">Sering</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q6" value="4" id="q6-5">
+                            <label for="q6-5">Sangat sering</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>💬 Keluhan Tambahan (Opsional)</h3>
+                <textarea id="keluhan" placeholder="Ceritakan keluhan atau hal yang ingin Anda konsultasikan..."></textarea>
+            </div>
+
+            <button onclick="submitForm()">Analisis Tingkat Stres Saya</button>
+
+            <div class="result" id="result"></div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 SehatBersama.id | Kesehatan Mental adalah Prioritas</p>
+        </footer>
+    </div>
+
+    <script>
+        function submitForm() {
+            const nama = document.getElementById('nama').value;
+            const email = document.getElementById('email').value;
+            const keluhan = document.getElementById('keluhan').value;
+
+            if (!nama) {
+                alert('Mohon isi nama Anda terlebih dahulu!');
+                return;
+            }
+
+            // Hitung skor
+            let totalScore = 0;
+            let allAnswered = true;
+
+            for (let i = 1; i <= 6; i++) {
+                const answer = document.querySelector(`input[name="q${i}"]:checked`);
+                if (!answer) {
+                    allAnswered = false;
+                    break;
+                }
+                totalScore += parseInt(answer.value);
+            }
+
+            if (!allAnswered) {
+                alert('Mohon jawab semua pertanyaan!');
+                return;
+            }
+
+            // Tentukan tingkat stres
+            let level, levelClass, description, recommendations;
+
+            if (totalScore <= 8) {
+                level = "STRES RENDAH";
+                levelClass = "level-rendah";
+                description = `Halo ${nama}! 😊 Kabar baik! Tingkat stres Anda saat ini masih dalam kategori rendah. Anda menunjukkan kemampuan yang baik dalam mengelola tekanan hidup sehari-hari.`;
+                recommendations = [
+                    "Pertahankan pola hidup sehat yang sudah Anda jalani",
+                    "Lakukan aktivitas yang Anda sukai secara rutin",
+                    "Jaga pola tidur yang teratur (7-8 jam per hari)",
+                    "Tetap terhubung dengan orang-orang terdekat",
+                    "Lakukan olahraga ringan minimal 30 menit per hari"
+                ];
+            } else if (totalScore <= 16) {
+                level = "STRES SEDANG";
+                levelClass = "level-sedang";
+                description = `Halo ${nama}, tingkat stres Anda berada pada level sedang. Ini adalah tanda bahwa Anda perlu lebih memperhatikan kesehatan mental Anda. Jangan khawatir, dengan langkah-langkah yang tepat, Anda bisa mengelolanya dengan baik.`;
+                recommendations = [
+                    "Identifikasi sumber stres utama dalam hidup Anda",
+                    "Praktikkan teknik relaksasi seperti meditasi atau pernapasan dalam",
+                    "Atur waktu istirahat yang cukup dan berkualitas",
+                    "Kurangi konsumsi kafein dan hindari alkohol",
+                    "Bicarakan perasaan Anda dengan orang terpercaya",
+                    "Pertimbangkan untuk berkonsultasi lebih lanjut dengan profesional"
+                ];
+            } else {
+                level = "STRES TINGGI";
+                levelClass = "level-tinggi";
+                description = `${nama}, hasil tes menunjukkan tingkat stres Anda cukup tinggi. Ini adalah sinyal penting untuk segera mengambil tindakan untuk kesehatan mental Anda. Ingat, meminta bantuan adalah tanda kekuatan, bukan kelemahan.`;
+                recommendations = [
+                    "⚠️ SANGAT DISARANKAN untuk berkonsultasi dengan psikolog atau profesional kesehatan mental",
+                    "Prioritaskan istirahat dan jangan memaksakan diri",
+                    "Hindari mengambil keputusan besar saat dalam kondisi stres tinggi",
+                    "Praktikkan self-care setiap hari",
+                    "Batasi paparan berita atau media sosial yang memicu stres",
+                    "Cari dukungan dari keluarga dan teman terdekat",
+                    "Pertimbangkan terapi profesional untuk penanganan lebih mendalam"
+                ];
+            }
+
+            // Tampilkan hasil
+            const resultHTML = `
+                <h3>📊 Hasil Analisis Tingkat Stres</h3>
+                <div class="stress-level ${levelClass}">
+                    ${level}
+                    <div style="font-size: 0.5em; margin-top: 10px;">Skor: ${totalScore}/24</div>
+                </div>
+                <p style="line-height: 1.8; color: #555;">${description}</p>
+                
+                <div class="recommendation">
+                    <h4>💡 Rekomendasi dari Mardiana, M.Psi.:</h4>
+                    <ul>
+                        ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                    </ul>
+                </div>
+
+                ${keluhan ? `
+                    <div class="recommendation" style="margin-top: 15px;">
+                        <h4>📝 Keluhan Anda:</h4>
+                        <p style="color: #555; line-height: 1.6;">"${keluhan}"</p>
+                        <p style="color: #667eea; margin-top: 10px; font-style: italic;">
+                            Terima kasih telah berbagi. Keluhan Anda penting dan valid. 
+                            Jika Anda memerlukan konsultasi lebih lanjut, jangan ragu untuk menghubungi profesional kesehatan mental.
+                        </p>
+                    </div>
+                ` : ''}
+
+                <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107;">
+                    <p style="color: #856404; font-weight: 500;">
+                        ℹ️ <strong>Catatan Penting:</strong> Hasil tes ini bersifat skrining awal dan bukan diagnosis medis. 
+                        Untuk evaluasi menyeluruh, silakan konsultasi dengan psikolog atau psikiater.
+                    </p>
+                </div>
+
+                <button onclick="resetForm()" style="margin-top: 20px; background: #6c757d;">
+                    Ulangi Tes
+                </button>
+            `;
+
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetForm() {
+            document.getElementById('nama').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('keluhan').value = '';
+            
+            for (let i = 1; i <= 6; i++) {
+                const radios = document.querySelectorAll(`input[name="q${i}"]`);
+                radios.forEach(radio => radio.checked = false);
+            }
+
+            document.getElementById('result').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
